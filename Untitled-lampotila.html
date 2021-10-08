@@ -1,0 +1,92 @@
+<html>
+    <head>
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+      
+
+        async function drawChart() {
+
+        let url='https://api.thingspeak.com/channels/1527799/feeds.json?results=20';
+
+         const fetchResults = await fetch(url);
+         const jsonResult = await fetchResults.json();
+         const feedsResult = jsonResult.feeds;
+
+         let editRows = [['Pvm','lämpötila']];
+         for (const i in feedsResult) {
+           editRows.push([feedsResult[i].created_at, parseInt(feedsResult[i].field2.split('.')[0])]); //+= " " + feedsResult [i].field1.split('.',1);   
+              
+      }
+         //document.getElementById("resultTable").innerHTML = editRows;
+
+        var data = google.visualization.arrayToDataTable(editRows);
+        
+        var options = {
+        title: 'Lämpötila',
+        curveType: 'function',
+        legend: { position: 'bottom'}
+      };
+
+       let editRows2 = [['Pvm','ilmankosteus']];
+       for (const i in feedsResult) {
+       editRows2.push([feedsResult[i].created_at, parseInt(feedsResult[i].field1.split('.')[0])]);
+      }
+         var data2 = google.visualization.arrayToDataTable(editRows2)
+
+         var options2 = {
+         title: 'Ilmankosteus',
+         curveType: 'function',
+         legend: { position: 'bottom'}
+
+      };
+        let editRows3 = [['Pvm','Dew_point']];
+        for (const i in feedsResult) {
+        editRows3.push([feedsResult[i].created_at, parseInt(feedsResult[i].field3.split('.')[0])]);
+
+      }
+      var data3 = google.visualization.arrayToDataTable(editRows3)
+
+      var options3 = {
+      title: 'Dew_point',
+      curveType: 'function',
+      legend: { position: 'bottom'}  
+
+      
+      }
+      let editRows4 = [['Pvm','Heat_Index']];
+        for (const i in feedsResult) {
+        editRows4.push([feedsResult[i].created_at, parseInt(feedsResult[i].field4.split('.')[0])]);
+
+      }
+      var data4 = google.visualization.arrayToDataTable(editRows4)
+      var options4 = {
+      title: 'Heat_Index',
+      curveType: 'function',
+      legend: { position: 'bottom'} 
+     
+      }
+
+          var chart = new google.visualization.LineChart(document.getElementById('lampotila'));
+          chart.draw(data, options);
+          var chart2 = new google.visualization.AreaChart(document.getElementById('ilmankosteus'));
+          chart2.draw(data2, options2);
+          var chart3 = new google.visualization.AreaChart(document.getElementById('Dew_point'));
+          chart3.draw(data3, options3);
+          var chart4 = new google.visualization.AreaChart(document.getElementById('Heat_Index'));
+          chart4.draw(data4, options4);
+
+          setTimeout(drawChart, 3000)
+          
+       }
+      </script>
+    </head>
+    <body>
+      <div id="resultTable" ></div>
+      <div id="lampotila"></div>
+      <div id="ilmankosteus"></div>
+      <div id="Dew_point" ></div>
+      <div id="Heat_Index" ></div>
+    </body>
+  </html>
