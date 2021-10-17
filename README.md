@@ -1,2 +1,2 @@
 ## LämpötilaMittari
-![](url)
+![kaavio](PhotonKaavio.jpg)
