@@ -6,8 +6,7 @@
       <script type="text/javascript">
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
-      
-
+          
         async function drawChart() {
 
         let url='https://api.thingspeak.com/channels/1527799/feeds.json?results=20';
@@ -54,7 +53,6 @@
       title: 'Dew_point',
       curveType: 'function',
       legend: { position: 'bottom'}  
-
       
       }
       let editRows4 = [['Pvm','Heat_Index']];
